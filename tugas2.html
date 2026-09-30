@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas Cetak Data Pegawai</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Arial, sans-serif;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tfoot th {
+            background-color: #e0e0e0;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Data Gaji Pegawai</h2>
+
+    <script>
+        const daftarPegawai = [
+            { nama: "Anwar Sanusy", umur: 35, jabatan: "Manajer", status: "Menikah" },
+            { nama: "Dinda Jufita Hamida", umur: 28, jabatan: "Asisten Manajer", status: "Belum Menikah" },
+            { nama: "Junaidah", umur: 24, jabatan: "Staff", status: "Menikah" }
+        ];
+
+        function formatGaji(angka) {
+            return angka.toLocaleString('id-ID');
+        }
+
+        let totalKeseluruhanGaji = 0;
+
+        document.write("<table>");
+            
+        document.write("<thead>");
+        document.write("<tr>");
+        document.write("<th>Nama Pegawai</th>");
+        document.write("<th>Umur</th>");
+        document.write("<th>Jabatan</th>");
+        document.write("<th>Status</th>");
+        document.write("<th>Gaji Pokok</th>");
+        document.write("<th>Tunj. Jabatan</th>");
+        document.write("<th>BPJS</th>");
+        document.write("<th>Tunj. Keluarga</th>");
+        document.write("<th>Total Gaji</th>");
+        document.write("</tr>");
+        document.write("</thead>");
+
+        
+        document.write("<tbody>");
+        for (let i = 0; i < daftarPegawai.length; i++) {
+            let p = daftarPegawai[i];
+            let gajiPokok = 0;
+
+            if (p.jabatan === "Manajer") {
+                gajiPokok = 15000000; // 15 jt
+            } else if (p.jabatan === "Asisten Manajer") {
+                gajiPokok = 10000000; // 10 jt
+            } else if (p.jabatan === "Staff") {
+                gajiPokok = 5000000;  // 5 jt
+            }
+
+            let tunjanganJabatan = 0.15 * gajiPokok;
+
+            let bpjs = 0.10 * gajiPokok;
+
+            let tunjanganKeluarga = (p.status === "Menikah") ? (0.20 * gajiPokok) : 0;
+
+            let totalGaji = gajiPokok + tunjanganJabatan + bpjs + tunjanganKeluarga;
+            
+            totalKeseluruhanGaji += totalGaji;
+
+            document.write("<tr>");
+            document.write("<td>" + p.nama + "</td>");
+            document.write("<td>" + p.umur + "</td>");
+            document.write("<td>" + p.jabatan + "</td>");
+            document.write("<td>" + p.status + "</td>");
+            document.write("<td>" + formatGaji(gajiPokok) + "</td>");
+            document.write("<td>" + formatGaji(tunjanganJabatan) + "</td>");
+            document.write("<td>" + formatGaji(bpjs) + "</td>");
+            document.write("<td>" + formatGaji(tunjanganKeluarga) + "</td>");
+            document.write("<td>" + formatGaji(totalGaji) + "</td>");
+            document.write("</tr>");
+        }
+        document.write("</tbody>");
+
+        document.write("<tfoot>");
+        document.write("<tr>");
+        document.write("<th colspan='8'>Total Keseluruhan Gaji Pegawai:</th>");
+        document.write("<th>" + formatGaji(totalKeseluruhanGaji) + "</th>");
+        document.write("</tr>");
+        document.write("</tfoot>");
+
+        document.write("</table>");
+    </script>
+
+</body>
+</html>
